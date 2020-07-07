@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-12 ">
+			<h1 class="heading text-center mb-5 borders-bottom border-bottom-black">Teachers</h1>
+		</div>
+	</div>
+
+	
+
+
+
+	<div class="container table-container">
+		<div class="col-md-12 text-right">
+				<a data-toggle="modal" data-target="#createTeacher"><i class="fas fa-plus-circle"></i> Create a teacher</a>
+		</div>
+		<div class="col-md-12 text-right">
+				<a data-toggle="modal" data-target="#assignTeacher"><i class="fas fa-plus-circle"></i> Assign teacher to class</a>
+		</div>
+
+		<div class="text-center">
+				<input type="search" class="search-for-table" id="search" placeholder="Search" autofocus>
+				<table class="table-responsive-sm" id="table">
+					<tr class="header">
+						<th>Firstname</th>
+						<th>Lastname</th>
+						<th>View</th>
+					</tr>
+					{% for teacher in teachers_of_my_school %}
+					<tr>
+						<td>{{ teacher.user.first_name }}</td>
+						<td>{{ teacher.user.last_name }}</td>
+						<td><a href="{% url "appoverviews:teacher" teacher_id=teacher.id %}">View</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!--#####################################  MODAL  ###########################################-->
+
+<div class="modal fade" id="createTeacher" tabindex="-1" role="dialog"
+aria-labelledby="createTeacherLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content text-center">
+		<div class="modal-header ">
+			<h5 class="modal-title" id="createTeacherLabel">Unesi podatke</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<form class="text-center form" id="form" action="" method="post" enctype="multipart/form-data">
+			<div class="modal-body">{% csrf_token %}
+				{{ user_form.as_p }}
+				{{ teacher_form.as_p }}
+				<input class="submit" type="submit" name="" value="Submit">
+			</div>
+		</form>
+
+	</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="assignTeacher" tabindex="-1" role="dialog" aria-labelledby="assignTeacherLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="assignTeacherLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="text-center" id="form" action="" method="post">
+				<div class="modal-body">{% csrf_token %}
+					{{ assing_teacher_to_class_form.as_p }}
+					<input type="submit" name="" value="Submit" class="submit">
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

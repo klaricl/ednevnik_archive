@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load staticfiles %}
+<link rel="stylesheet" type='text/css' href="{% static 'css/skelet.css' %}" />
+<link rel="stylesheet" type='text/css' href="{% static 'css/dark-theme-colors.css' %}" />
+
+
+<div class="container center-block center-text">
+
+	<div class="page mt-5">
+		<form method="post" action="{% url 'appprofiles:login' %}">
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<h2 class="text-center">Log in</h2>
+				</div>
+			</div>
+
+			{% csrf_token %}
+			{# A more "HTML" way of creating the login form#}
+
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<label for="username" class="text-center registration">
+						<input type="text" name="username" class="" placeholder="Username" required>
+					</label>
+				</div>
+			</div>
+	
+			<div class="row justify-content-center">
+				<div class="col-md-6"> 
+					<label for="password" class="text-center registration">
+						<input name="password" type="password" class="" placeholder="Password" required>
+					</label>
+				</div>
+			</div>
+
+			<div class="row justify-content-center">
+				<div class="col-md-12 text-center">
+					<input name="" value="Login" type="submit" class="submit outlinenone" placeholder="Log in">
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center">	
+					<a class="register-link" href="{% url "registration" %}">Register on Omikron</a>
+				</div>
+			</div>
+		</form>
+		<p class="error text-center">
+			{% if error_msg %}
+				{{ error_msg }}
+			{% endif %}
+		</p>
+	</div>
+</div>
+{% endblock %}

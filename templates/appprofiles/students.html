@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 ">
+            <h1 class="heading text-center mb-5 borders-bottom border-bottom-black">My students</h1>
+        </div>
+    </div>
+
+
+    <div class="container table-container">
+        <div class="col-md-12 text-right">
+            <a type="" class="" data-toggle="modal" data-target="#createastudent"><i class="fas fa-plus-circle"></i> Create a student </a>
+        </div>
+        <div class="text-center">
+                <input type="search" class="search-for-table" id="search" placeholder="Search" autofocus>
+        </div>
+        <table class="table-responsive-sm" id="table">
+            <tr class="header">
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>View</th>
+            </tr>
+            {% for student in students_of_my_class %}
+            <tr>
+                <td>{{ student.user.first_name }}</td>
+                <td>{{ student.user.last_name }}</td>
+                <td><a href="{% url "appoverviews:student" student_id=student.id %}">View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+<!-- ############################ MODAL ############################################ -->
+<div class="modal fade" id="createastudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="" method="post" enctype="multipart/form-data">
+				<div class="modal-body">{% csrf_token %}
+          {{ user_form.as_p }}
+          {{ student_form.as_p}}
+					<input type="submit" name="" value="submit" class="submit">
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

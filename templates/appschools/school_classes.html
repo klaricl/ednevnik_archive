@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_block%}
+
+<script src="{% static 'js/js.js' %}"></script>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-12 ">
+			<h1 class="heading text-center mb-5 borders-bottom border-bottom-black">Classes</h1>
+		</div>
+	</div>
+
+	
+	<div class="container table-container">
+			<div class="col-md-12 text-right">
+					<a data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus-circle"></i> Add school class</a>
+			</div>
+			<table class="table-responsive-sm">
+				<tr>
+					<th>Number</th>
+					<th>Direction</th>
+					<th>Teacher</th>
+					<th>school</th>
+				</tr>
+				{% for class in classes_of_my_school %}
+				<tr>
+					<td>{{ class.class_number }}</td>
+					<td>{{ class.class_direction }}</td>
+					{% load app_filters %}
+					<td>{{ teachers_dict|get_item:class }}</td>
+					<td>{{ class.school }}</td>
+				</tr>
+
+
+				{% endfor %}
+			</table>
+	</div>		
+	
+</div>
+	<!--########## Modal ######################################################################-->
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Unesi podatke</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="text-center form" id="form" action="" method="post">
+					<div class="modal-body">{% csrf_token %}
+						{{ school_class_form.as_table }}
+						<div class="justify-content-center">
+							<input type="submit" name="" value="Submit" class="submit">
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	{% endblock %}

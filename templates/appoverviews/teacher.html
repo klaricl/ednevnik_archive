@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load staticfiles %}
+
+
+
+<div class="container main-section">
+	<div class="container">
+		<div class="row">
+	</div>
+		<div class="row">
+			<div class="col-md-2 text-center">
+				<img src="/media/{{ teacher.profile_pic }}" alt="" class="profile-img">
+			</div>
+			<div class="col-md-2 my-auto text-center">
+				<p class="light-theme-color h3 d-inline-block">{{ teacher.user.first_name }}</p>
+				<p class="light-theme-color h3 d-inline-block">{{ teacher.user.last_name }}</p>
+				<p class="light-theme-color h4 fw">{{ role }}</p>
+			</div>
+			<div class="col-md-4 text-center my-auto">
+				<p class="light-theme-color h3">{{ teacher.school_class }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container table-container">
+	<h3 class="text-center table-information">Subjects the {{ teacher.user.first_name }} {{ teacher.user.last_name }}  teaches</h3>
+		<table>
+			<tr>
+				<th>Subject</th>
+				<th>Class</th>
+			</tr>
+			{% for subject in subjects %}
+			<tr>
+				<td>{{ subject.title }}</td>
+				<td>{{ subject.school_class }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+</div>
+
+
+{% endblock %}

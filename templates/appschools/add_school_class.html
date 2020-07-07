@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load staticfiles %}
+    {% block body_block%}
+	<link rel="stylesheet" href="{% static 'css/add_school_class.css' %}">
+
+    <form class="registration text-center" action="{% url "appschools:addSchoolClass" %}" method="post">
+    <h1 class="txt">Add school class</h1>
+      {{ form.as_table }}
+      {%  csrf_token %}
+      <div class="button">
+      	<input class="submit" type="submit" name="" value="Submit">
+	  </div>
+    </form>
+
+    {% endblock %}

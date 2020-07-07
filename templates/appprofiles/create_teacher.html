@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+
+  <form class="" action="" method="post" enctype="multipart/form-data">
+
+    <h1 class="heading">Create a teacher</h1>
+      {% csrf_token %}
+      {{ user_form.as_p }}
+      {{ teacher_form.as_p}}
+    <input type="submit" name="" value="submit">
+
+  </form>
+
+  <fieldset>
+    <legend>Teachers:</legend>
+    <table>
+      <tr>
+        <th>fname</th>
+        <th>lname</th>
+      </tr>
+      {% for teacher in teachers_of_my_school %}
+        <tr>
+          <td>{{ teacher.user.first_name }}</td>
+          <td>{{ teacher.user.last_name }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </fieldset>
+{% endblock %}

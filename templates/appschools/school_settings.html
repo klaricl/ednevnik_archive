@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+<script src="{% static 'js/js.js' %}"></script>
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-12 ">
+			<h1 class="heading text-center mb-5 borders-bottom border-bottom-black">School settings</h1>
+		</div>
+	</div>
+
+	{% if current_user.is_siteadmin %}
+	<div class="settings-section border-bottom-black">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="text-center">Principal settings</h2>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="my-auto">
+						<h4 class="text-center">Current principal: {{ current_principal }}</h4>
+						<button type="button" class="submit modal-triggers" data-toggle="modal" data-target="#addChangePrincipalModal"> add/change</button>
+					</p>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-md-12 mt-2">
+					<p class="my-auto">
+						<button type="button" class="submit modal-triggers" data-toggle="modal" data-target="#allTeachersModal">Add existing teacher</button>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if current_user.is_siteadmin or current_user.is_principal %}
+	<div class="settings-section border-bottom-black">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="text-center">Other settings</h2>
+			</div>
+		</div>
+		<p class="text-center">current semester: {{current_user.school.semester}}</p>
+		<div class="container">
+			<div class="row ">
+				<div class="col-md-12 mt-2">
+					<p class="my-auto">
+						<button type="button" class="submit modal-triggers" data-toggle="modal" data-target="#changeSemesterModal">Change semester</button>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if current_user.is_teacher%}
+	<div class="settings-section border-bottom-black">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="text-center">Change shift</h2>
+			</div>
+		</div>
+		<p class="text-center">Current Shift: {{current_user.school_class.shift}}</p>
+		<div class="container">
+			<div class="row ">
+				<div class="col-md-12 mt-2">
+					<p class="my-auto">
+						<button type="button" class="submit modal-triggers" data-toggle="modal" data-target="#changeShiftModal">Change Shift</button>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+</div>
+
+
+
+
+<!-- #################################### MODAL ######################################### -->
+<div class="modal fade" id="addChangePrincipalModal" tabindex="-1" role="dialog" aria-labelledby="addChangePrincipalModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addChangePrincipalModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+				<div class="modal-body">
+					{{ user_form.as_p }}
+					{{ principal_form.as_p }}
+				</div>
+				<input type="submit" name="" value="Submit" class="	submit align-left">
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="allTeachersModal" tabindex="-1" role="dialog" aria-labelledby="allTeachersModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="allTeachersModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="" method="post">{% csrf_token %}
+				<div class="modal-body">
+					{{ allTeachers }}
+				</div>
+				<input type="submit" name="" value="Submit" class="	submit align-left">
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="changeSemesterModal" tabindex="-1" role="dialog" aria-labelledby="changeSemesterModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="changeSemesterModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="" method="post">{% csrf_token %}
+				<div class="modal-body">
+					{{ change_semester_form.as_p }}
+				</div>
+				<input type="submit" name="" value="Submit" class="	submit align-left">
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="changeShiftModal" tabindex="-1" role="dialog" aria-labelledby="changeShiftModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="changeShiftModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+				<div class="modal-body">
+					{{ shift }}
+				</div>
+				<input type="submit" name="" value="Submit" class="	submit align-left">
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

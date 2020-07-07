@@ -1,0 +1,152 @@
+:root{
+	/* ovde idu sve boje  koje se koriste */
+	--purple: 		83,69,91;
+	--purple-dark:	48, 40, 53;
+	--purple-dirty: 93, 78, 101;
+	--dark: 		32,30,34;
+	--main-white: 	227, 227, 227; 
+	--navc:			32,30,34;
+	--orange:		238,122,54;
+	--orange-bright:235,73,93;
+	--grey: 		224, 224, 224; 
+	--text-color: 	52, 58, 64;
+	--darker-white: 222, 233, 234;
+}
+
+
+
+
+
+
+
+
+
+/*
+1. Body, header, section
+2. Video
+3. Services section
+4. Forms
+4.1. Input fields
+4.2. Buttons
+5. Media query
+*/
+
+/* Body, header, section */
+body {
+	background-image:radial-gradient(circle at top, rgba(var(--purple),1),rgba(var(--dark),1));
+	color: rgb(var(--main-white));
+}
+font-family: 'Roboto Slab', serif;
+}
+
+header {
+	padding: 154px 0 100px;
+}
+
+section {
+	padding: 150px 0;
+	background-color: rgba(var(--purple-dirty));
+}
+/* Body, header, section END */
+
+
+/* Video */
+.video {
+	width: 100%;
+	height: 50vh;
+}
+/* Video END*/
+
+.navbar, footer {
+	background-color: rgb(var(--navc));
+}
+
+.nav-item > a {
+	color: white;
+}
+
+/* Services section */
+#services {
+	background-color: rgba(var(--darkbgc));
+}
+
+.navbar-brand {
+	background-color: #fff;
+	background-image: linear-gradient(to right,rgb(var(--first)), rgba(var(--second)), rgb(var(--third)));
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+/* Services section END*/
+
+/* Form */
+
+/* Input fields */
+form > p > input,
+form > p > textarea {
+	border: none;
+	text-align: center;
+	border-radius: 10px;
+	margin: 10px;
+	box-shadow: 0px 4px 5px -2px rgba(0,0,0,0.75);
+	background-color: rgba(236, 236, 236, 0.3);
+	transition: all .3s;
+	padding: 5px;
+}
+
+form > p > input:focus,
+form > p > textarea:focus {
+	outline: none;
+	background-color: rgba(225, 240, 247, .6);
+	box-shadow: 0px 10px 16px -4px rgba(0,0,0,0.75);
+}
+
+form > p > input[type="text"],
+form > p > textarea{
+	color: #4e7d91;
+}
+
+form > p > input::placeholder,
+form > p > textarea::placeholder {
+	font-size: 20px;
+	color: #4f5152;
+}
+/* Input fields END */
+
+
+/* Buttons*/
+form > input {
+	outline: none;
+	border: none;
+	border-radius: 100px;
+	padding: 0 15px;
+	width: 100px;
+	height: 40px;
+	-webkit-transition: all .3s;
+	transition: all .3s;
+	background-color: rgb(var(--darker-white));
+	-webkit-box-shadow: 0px 4px 5px -2px rgba(var(--text-color),0.75);
+	box-shadow: 0px 4px 5px -2px rgba(var(--text-color),0.75);
+	color: rgb(var(--dark));
+}
+
+form >input:hover {
+	outline: none;
+	color: white;
+	-webkit-box-shadow: 0px 10px 16px -4px rgba(var(--text-color),0.75);
+	box-shadow: 0px 10px 16px -4px rgba(var(--text-color),0.75);
+	background-image:linear-gradient(to right,  rgba(var(--orange),.8),rgba(var(--orange-bright),.8)); 
+}
+
+/* Buttons END*/
+
+/* Form END */
+
+/* Media queries */
+@media (min-width: 992px) {
+	header {
+		padding: 156px 0 100px;
+	}
+}
+
+/* Media queries END */

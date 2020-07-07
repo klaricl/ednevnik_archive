@@ -1,0 +1,62 @@
+
+{% load staticfiles %}
+{% block body_block %}
+<!-- Responsive meta tag -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--Bootstrap 4-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet">
+<!-- CSS -->
+<link rel="stylesheet" type='text/css' href="{% static 'css/skelet.css' %}" />
+<link rel="stylesheet" type='text/css' href="{% static 'css/dark-theme-colors.css' %}" />
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="{% url "index" %}">Omikron eDnevnik</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "appprofiles:home" %}">To App</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "appprofiles:login" %}">Login</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div class="container">
+    <div>
+      <div class="row justify-content-center">
+        <h1>Register</h1>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="container">
+  <form class="text-center mt-5 register-form" action="{% url "registration" %}" method="post">
+
+    {% csrf_token %}
+      <div class="row">
+        <div class="col-md-6 mt-3 registration "> 
+          <h3>Site Admin data</h3>
+          {{ userForm.as_table }}
+          {{ siteAdminForm.as_table }}
+        </div>
+        <div class="col-md-6 mt-3 registration">
+          <h3>School data</h3>
+          {{ schoolForm.as_table }}
+        </div>
+      </div>
+      <input class="submit" type="submit" name="" value="Register">
+  </form>
+    </div>
+{% endblock %}

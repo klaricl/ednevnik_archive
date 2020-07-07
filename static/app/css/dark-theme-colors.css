@@ -1,0 +1,322 @@
+:root{
+	--baby-blue: 	204, 221, 238;
+	
+	
+	
+	/* ovde idu sve boje  koje se koriste */
+	--purple: 		83,69,91;
+	--purple-light: 102, 85, 112;
+	--purple-dark:	48, 40, 53;
+	--purple-dirty: 93, 78, 101;
+	--dark: 		32,30,34;
+	--dark-light:	54, 50, 58;
+	--main-white: 	227, 227, 227; 
+	--orange:		238,122,54;
+	--orange-bright:235,73,93;
+	--grey: 		224, 224, 224; 
+	--text-color: 	52, 58, 64;
+	--darker-white: 222, 233, 234;
+}
+
+
+body{
+	background-image:radial-gradient(circle at top, rgba(var(--purple),1),rgba(var(--dark),1));
+	color: rgb(var(--main-white));
+}
+
+a {
+	color: rgb(var(--darker-white)); 
+}
+
+
+/* Bootstrap 4 */
+.navbar {
+	background-color: rgb(var(--dark));
+}
+.nav-item > a:hover {
+	color: white;
+}
+.navbar-nav > li > .dropdown-menu {
+	background: none;
+	background-color: rgb(var(--purple));
+	border: 1px solid rgba(var(--dark), .5);
+}
+.navbar-nav > li > .dropdown-menu a {
+	color: rgb(var(--darker-white)); 
+}
+.navbar-nav > li > .dropdown-menu a:hover {
+	background: none;
+	background-image: linear-gradient(to right,rgb(var(--purple)), rgba(var(--dark)));
+	color: white;
+}
+.navbar-dark .navbar-nav .nav-link {
+	color: rgb(var(--main-white));
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+	color: #f9f3de;
+}
+.navbar-brand {
+	color: rgb(222, 233, 234); /* fallback for IE */
+	background-image:linear-gradient(to right,  rgba(var(--orange),1),rgba(var(--orange-bright),1)); 
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+/* Bootstrap 4 */
+/* Pills */
+#firstSemesterTab,
+#secondSemesterTab {
+	color: rgb(var(--main-white));
+}
+
+#firstSemesterTab.active,
+#secondSemesterTab.active {
+	background-color: rgb(var(--purple));
+	color: rgb(var(--grey));
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.nav-tabs{
+	background-color: rgb(var(--purple-dark));
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.nav-tabs {
+	border-bottom: 1px solid transparent;
+}
+
+.border-bottom {
+	border-bottom: 1px groove rgb(var(--purple));
+}
+
+.borders {
+	border: 1px groove rgb(var(--purple));
+}
+
+.borders-dim {
+	-webkit-box-shadow: 0 0 0 1px rgba(var(--purple), .2);
+	box-shadow: 0 0 0 1px rgba(var(--purple), .2);
+}
+
+.borders-bottom {
+	border-bottom: 1px solid rgba(var(--purple));
+}
+
+/* Buttons */
+.submit {
+	background-color: rgb(var(--darker-white));
+	-webkit-box-shadow: 0px 4px 5px -2px rgba(var(--text-color),0.75);
+	box-shadow: 0px 4px 5px -2px rgba(var(--text-color),0.75);
+	color: rgb(var(--dark));
+}
+
+.submit:hover {
+	outline: none;
+	color: white;
+	-webkit-box-shadow: 0px 10px 16px -4px rgba(var(--text-color),0.75);
+	box-shadow: 0px 10px 16px -4px rgba(var(--text-color),0.75);
+	background-image:linear-gradient(to right,  rgba(var(--orange),.8),rgba(var(--orange-bright),.8));  
+}
+
+/* ########################### tables ####################################### */
+
+
+.table-container {
+	background-image:radial-gradient(circle at top, rgba(var(--purple-light), .4),rgba(var(--dark-light), .4));
+	-webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.table-accessory {
+	background-color:rgba(var(--purple), .4);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.search-for-table {
+	background: none;
+	background-color: rgba(255,255,255,.8);
+}
+
+
+tr:hover:not(:first-child) {
+	box-shadow: inset 0px 0px 10px -1px rgba(var(--orange),1);
+	color: rgb(var(--main-white));
+	outline: 2px solid rgba(var(--orange-bright));
+}
+
+
+
+tr:hover a{
+	color: rgb(var(--main-white));
+}
+
+
+
+tr:not(:last-child) {
+	border-bottom: 2px solid rgb(var(--purple-dirty));
+	
+}
+
+
+.table-big::-webkit-scrollbar-thumb {
+	background-image:linear-gradient(  rgba(var(--orange),1),rgba(var(--orange-bright),1));  
+}
+/* ########################### tables END ####################################### */
+
+
+/* ########################### REGISTRATION #################################### */
+
+.registration > input {
+	-webkit-box-shadow: 0px 4px 5px -2px rgba(var(--text-color),0.75);
+	box-shadow: 0px 4px 5px -2px rgba(var(--text-color),0.75);
+	background-color: rgba(var(--main-white));
+	color: rgb(var(--dark));
+	font-size: 20px;
+}
+
+.registration > input::-webkit-input-placeholder {
+	color: rgba(var(--purple-dark));
+}
+
+.registration > input:-ms-input-placeholder {
+	color: rgba(var(--purple-dark));
+}
+
+.registration > input::-ms-input-placeholder {
+	color: rgba(var(--purple-dark));
+}
+
+.registration > input::-webkit-input-placeholder {
+	color: rgba(var(--purple-dark));
+}
+
+.registration > input:-ms-input-placeholder {
+	color: rgba(var(--purple-dark));
+}
+
+.registration > input::placeholder {
+	color: rgba(var(--purple-dark));
+}
+
+.registration > input:hover,
+.registration > input:focus {
+	background-color: rgba(var(--main-white), .9);
+	-webkit-box-shadow: 0px 10px 16px -4px rgba(0,0,0,0.75);
+	box-shadow: 0px 10px 16px -4px rgba(0,0,0,0.75);
+}
+
+.register-form:hover {
+	background-color: rgba(var(--main-white),.1);
+}
+
+/* ########################### REGISTRATION END #################################### */
+
+
+
+/* ########################### LOGIN #################################### */
+.register-link {
+	color: inherit;
+}
+
+.register-link:hover {
+	color: inherit;
+}
+
+
+
+.error {
+	color: #f70419;
+	background-color: rgba(var(--main-white),.5);
+}
+
+.page {
+	background-color: rgba(var(--main-white),.1);
+}
+
+/* ########################### LOGIN END #################################### */
+
+
+
+/*############################# Modals ###########################################*/
+
+.modal-content {
+	background: none;
+	background-image:radial-gradient(circle at top, rgba(var(--purple),1),rgba(var(--dark),1));
+	color:rgb(var(--main-white));
+}
+
+.close {
+	color: rgb(var(--main-white));
+}
+.close:hover {
+	color: inherit;
+}
+
+.modal-body > input, select {
+	color: black;
+}
+
+
+
+/*############################# Modals END #######################################*/
+
+
+/* ############################ profile view ########################################### */
+
+.main-section{
+	background-image:radial-gradient(circle at top, rgba(var(--purple-light), .4),rgba(var(--dark-light), .4));
+	-webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+
+#dropdownMenuButton > * {
+	color: rgb(var(--purple-dirty));
+}
+
+.fa-cog {
+	transition: all 1s;
+}
+.fa-cog:hover {
+	transform: rotateZ(90deg);
+}
+
+.dropdown-menu {
+	background-color: rgb(var(--purple));
+	border: 1px solid rgba(var(--dark), .5);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	color: rgb(var(--main-white));
+}
+
+.dropdown-item:hover {
+	background-image: linear-gradient(to right,rgb(var(--purple)), rgba(var(--dark)));
+	color: white;
+}
+
+/* ############################ Profile view END ####################################### */
+
+
+/*############################ settings options ############################################## */
+
+.settings-section {
+	background-color: rgb(var(--purple));
+	-webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+/*############################ settings options END ############################################## */
+
+
+/* ############################ Footer ####################################### */
+
+.footer {
+	background-color: rgb(var(--dark));
+	
+}
+
+/* ############################ Footer ####################################### */

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/permission.css' %}">
+<div class="container">
+	<div class="msg mt-5">
+		<h1>PERMISSION DENIED</h1>
+		<h2>{{ msg }}</h2>	
+	</div>
+</div>
+
+{% endblock %}

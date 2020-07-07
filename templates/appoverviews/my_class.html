@@ -1,0 +1,19 @@
+{% extends "base.html"%}
+{% load staticfiles %}
+{% block body_block %}
+<link rel="stylesheet" href="{% static 'css/teacher_schoolclasses.css' %}">
+
+  <h1 class="heading text-center mb-5">This is my class</h1>
+  <table>
+    <tr>
+      <th>fname</th>
+      <th>lname</th>
+    </tr>
+    {% for student in my_students %}
+    <tr>
+      <td>{{ student.user.first_name }}</td>
+      <td>{{ student.user.last_name }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

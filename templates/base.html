@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>E-Dnevnik</title>
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/png" href="{% static '/images/favicon.ico' %}"/>
+	<!-- Responsive meta tag -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Icons -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<!-- GOOGLE FONT -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel="stylesheet">
+	<!--Bootstrap 4-->
+	<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+	<link rel="stylesheet" type='text/css' href="{% static 'css/bootstrap/bootstrap.min.css' %}" />
+	<!-- CSS -->
+	<link rel="stylesheet" type='text/css' href="{% static 'css/skelet.css' %}" />
+	<!--<link rel="stylesheet" type='text/css' href="{% static 'css/dark-theme-colors.css' %}" />-->
+	{% if current_user %}
+		{% with 'css/'|add:current_user.theme|add:'-theme-colors.css' as css_static %}
+		  <link rel="stylesheet" type='text/css' href="{% static css_static %}" />
+		{% endwith %}
+	{% else %}
+		<link rel="stylesheet" type='text/css' href="{% static 'css/dark-theme-colors.css' %}" />
+	{% endif %}
+
+	<!-- <link rel="stylesheet" type='text/css' href="{% static 'css/light-theme-colors.css' %}" /> -->
+	{% if current_user.theme == "dark" %}
+
+	{% endif %}
+	<!--Bootstrap 4 script-->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-dark navbar-expand-lg navbar-toggleable-sm  fixed-top" id="navbar">
+		<div class="container">
+			<a class="navbar-brand" href="{% url "index" %}">Omikron E-dnevnik</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			{% if user.is_authenticated %}
+			<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url "appprofiles:home" %}">My view</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">For principal</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="{% url "appprofiles:teachers" %}">Teachers</a>
+							<a class="dropdown-item" href="{% url "appschools:schoolClasses" %}">Classes</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">For teacher</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="{% url "appschoolsubjects:addSchoolSubject" %}">School subjects</a>
+							<a class="dropdown-item" href="{% url "appschoolscheduler:schedule" %}">School schedule</a>
+							<a class="dropdown-item" href="{% url "appprofiles:students" %}">Students</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Help</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="{% url "appschools:schoolSettings" %}">School settings</a>
+						</div>
+					</li>
+					{% if not user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url "appprofiles:login" %}">Login</a>
+					</li>
+					{% endif %}
+					{% if user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url "appprofiles:logout" %}">Logout</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+	</nav>
+
+
+	<div class="container-fluid main-container">
+		{% block body_block %}
+		{% endblock %}
+	</div>
+			<footer class="footer text-center">
+				<p>&copy; Copyrigt <span id="date"></span></p>
+				<p>All right reserved. Powered by <b>Omnikron</b>.</p>
+			</footer>
+</body>
+<script src="{% static 'js/date.js' %}"></script>
+<script src="{% static 'js/scroll.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
+</html>

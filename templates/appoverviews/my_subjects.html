@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body_block %}
+<link rel="stylesheet" href="{% static 'css/teacher_schoolclasses.css' %}">
+  <h1 class="heading text-center mb-5">Predmeti koje predajem</h1>
+  <table>
+    {% for subject in my_subjects %}
+      <tr>
+        <td>{{ subject.title }}</td>
+        <td>{{ subject.school_class }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

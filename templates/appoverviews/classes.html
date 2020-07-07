@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body_block %}
+<table class="vertical">
+	<tr>
+		<th>Broj</th>
+		<th>Smjer</th>
+		<th>Razrednik?</th>
+	</tr>
+	{% for class in classes %}
+	<tr>
+		<td>{{ class.class_number }}</td>
+		<td>{{ class.class_direction }}</td>
+		<td>{{ class.has_teacher }}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

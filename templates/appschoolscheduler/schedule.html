@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block body_block%}
+{% load staticfiles %}
+{% load get_time %}
+
+<div class="container">
+  <div class="table-container">
+    <h3 class="table-information text-center">Schedule</h3>
+      <table class="table-responsive-sm">
+          <tr>
+            <th></th>
+            <th>Ponedjeljak</th>
+            <th>Utorak</th>
+            <th>Srijeda</th>
+            <th>Cetvrtak</th>
+            <th>Petak</th>
+          </tr>
+          {% for i in "1234567"%}
+          <tr>
+            <td>{% get_class_time current_user i %}</td>
+            {% for j in "12345" %}
+            <td>
+              <!--<p>{% get_subject current_user i j %}<a data-toggle="modal" data-target="#{{ i }}_{{ j }}" class="btn btn-primary">{{ i }}_{{ j }}</a></p>-->
+            {% get_subject current_user i j %}<a data-toggle="modal" data-target="#{{ i }}_{{ j }}"><sup><i class="far fa-edit mx-2"></i></sup></a>
+
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+  </div>
+</div>
+
+
+{% for i in "1234567" %}
+  {% for j in "12345" %}
+  <div class="modal fade" id="{{ i }}_{{ j }}" tabindex="-1" role="dialog" aria-labelledby="{{ i }}_{{ j }}Label" aria-hidden="true">
+  	<div class="modal-dialog modal-dialog-centered" role="document">
+  		<div class="modal-content text-center">
+  			<div class="modal-header">
+  				<h5 class="modal-title text-center" id="{{ i }}_{{ j }}Label">{{i}}.sat, dan {{j}}</h5>
+  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  					<span aria-hidden="true">&times;</span>
+  				</button>
+  			</div>
+        <form class="" action="{% url "appschoolscheduler:setschedule" order=i day=j %}" method="post">
+          <div class="mt-2">{% csrf_token %}
+            {{ form }}
+            <div class="d-block">
+              <input type="submit" name="" value="submit" class="submit">
+            </div>
+          </div>
+        </form>
+
+  		</div>
+  	</div>
+  </div>
+  {% endfor %}
+{% endfor %}
+{% endblock %}

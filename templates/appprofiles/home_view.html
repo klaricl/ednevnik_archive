@@ -1,0 +1,359 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load staticfiles %}
+
+{% load get_time %}
+
+<h3 id="semesterNumber" class="d-none">{{ current_user.school.semester }}</h3>
+<div class="container main-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2 text-center">
+				<img src="/media/{{ current_user.profile_pic }}" alt="profile photo" class="profile-img">
+			</div>
+			<div class="col-md-2 my-auto text-center">
+				<p class="light-theme-color h3"><span class="fw h6"></span>{{ current_user.user.first_name }} {{ current_user.user.last_name }}</p>
+				<p class="light-theme-color h5 fw"><span class="fw h6"></span>{{ role }}</p>
+			</div>
+			<div class="col-md-4 text-center my-auto">
+				<p class="light-theme-color h3"><span class="fw h6"></span>{{ current_user.school }}</p>
+				<p class="light-theme-color h5 fw"><span class="fw h6"></span>{{ current_user.school_class }}</p>
+			</div>
+			<div class="col-md-4 text-right my-auto">
+				<div class="dropdown">
+					<a class="h1" id="dropdownMenuButton" data-toggle="dropdown" data-toggle="tooltip" data-placement="top" title="Settings" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-cog"></i>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item"  data-toggle="modal" data-target="#exampleModal">Theme: {{ current_user.theme }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="container table-container" id="main">
+	{% if current_user.is_teacher %}
+	<h3 class="text-center  table-information">Raspored sati prva smjena</h3>
+	<div class="table-big">
+			<table class="table-responsive-sm">
+					<tr>
+						<th></th>
+						<th>Ponedjeljak</th>
+						<th>Utorak</th>
+						<th>Srijeda</th>
+						<th>Cetvrtak</th>
+						<th>Petak</th>
+					</tr>
+					{% for i in "1234567"%}
+					<tr>
+						<td>{% get_class_time_shift current_user i 1 %}</td>
+						{% for j in "12345" %}
+						<td>
+							<p class="my-0">{% get_subject_teacher_first_shift current_user i j as subject %}
+
+
+								{% if subject %}
+									<!-- TESTING -->
+									<a data-toggle="modal" data-target="#{% get_lesson_history subject %}Modal">{{ subject }} ({{ subject.school_class }})</a>
+									{% get_lesson_history subject as lesson_history %}
+
+									<div class="modal fade" id="{{ lesson_history }}Modal" tabindex="-1" role="dialog" aria-labelledby="{{ lesson_history }}ModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered" role="document">
+											<div class="modal-content text-center">
+												<div class="modal-header">
+													<h5 class="modal-title" id="{{ lesson_history }}ModalLabel">Tijek</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+													<div class="">{% csrf_token %}
+														<table>
+															<tr>
+																<td>Date</td>
+																<td>Description</td>
+															</tr>
+
+															{% for lesson in lesson_history %}
+															<tr>
+																<td>{{ lesson.date }}</td>
+																<td>{{ lesson.lesson }}</td>
+															</tr>
+
+															{%endfor%}
+														</table>
+
+													</div>
+											</div>
+										</div>
+									</div>
+									<!-- ENDTESTING -->
+									<a data-toggle="modal" data-target="#{{ i }}_{{ j }}" ><sup><i class="far fa-edit mx-2"></i></sup></a>
+									<a data-toggle="modal" data-target="#{{ i }}_{{ j }}_absences" ><sup><i class="far fa-edit mx-2"></i></sup></a>
+								{% endif %}
+							</p>
+						</td>
+						{% endfor %}
+					</tr>
+					{% endfor %}
+
+					{% for i in "1234567"%}
+					<tr>
+						<td>{% get_class_time_shift current_user i 2 %}</td>
+						{% for j in "12345" %}
+						<td>
+							<p class="my-0">{% get_subject_teacher_second_shift current_user i j as subject %}
+								{% if subject %}
+								<!-- TESTING -->
+								<a data-toggle="modal" data-target="#{% get_lesson_history subject %}Modal">{{ subject }} ({{ subject.school_class }})</a>
+								{% get_lesson_history subject as lesson_history %}
+
+								<div class="modal fade" id="{{ lesson_history }}Modal" tabindex="-1" role="dialog" aria-labelledby="{{ lesson_history }}ModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content text-center">
+											<div class="modal-header">
+												<h5 class="modal-title" id="{{ lesson_history }}ModalLabel">red {{i}} dan {{j}}</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+												<div class="">{% csrf_token %}
+													{% for lesson in lesson_history %}
+														{{ lesson.lesson }}
+													{%endfor%}
+												</div>
+										</div>
+									</div>
+								</div>
+								<!-- ENDTESTING -->
+
+									<a data-toggle="modal" data-target="#{{ i }}_{{ j }}" ><sup><i class="far fa-edit mx-2"></i></sup></a>
+									<a data-toggle="modal" data-target="#{{ i }}_{{ j }}_absences" ><sup><i class="far fa-edit mx-2"></i></sup></a>
+								{% endif %}
+							</p>
+						</td>
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				</table>
+	</div>
+
+	<br>
+</div>
+
+
+<div class="container table-container">
+	<h3 class="text-center  table-information">Predmeti koje predajem</h3>
+	<div class="text-center">
+		<input type="search" class="search-for-table" id="search" placeholder="Search" autofocus>
+	</div>
+	<table class="table-responsive-sm" id="table">
+		<tr class="header">
+			<th>Subject</th>
+			<th>Class</th>
+			<th>Get info</th>
+		</tr>
+		{% for subject in my_subjects %}
+		<tr>
+			<td><a href="{% url "appoverviews:subjectToTeach" subject_id=subject.id %}">{{ subject.title }}</a></td>
+			<td><a href="{% url "appoverviews:subjectToTeach" subject_id=subject.id %}">{{ subject.school_class }}</a></td>
+			<td><a href="{% url "appoverviews:subjectToTeach" subject_id=subject.id %}">View</a></td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+
+
+	{% if current_user.is_student %}
+	<h3 class="table-information text-center">Raspored sati</h3>
+	<table class="table-responsive-sm">
+	  <tr>
+	    <th></th>
+	    <th>Ponedjeljak</th>
+	    <th>Utorak</th>
+	    <th>Srijeda</th>
+	    <th>Cetvrtak</th>
+	    <th>Petak</th>
+	    <th>Subota</th>
+	    <th>Nedjelja</th>
+	  </tr>
+	  {% for i in "1234567"%}
+	  <tr>
+	    <td>{% get_class_time current_user i %}</td>
+	    {% for j in "12345" %}
+	    <td>
+	      <!--<p>{% get_subject current_user i j %}<a data-toggle="modal" data-target="#{{ i }}_{{ j }}" class="btn btn-primary">{{ i }}_{{ j }}</a></p>-->
+	      <p>{% get_subject current_user i j %}</p>
+		</td>
+	    {% endfor %}
+	  </tr>
+	  {% endfor %}
+	</table>
+	<br>
+</div>
+
+<div class="container table-container">
+	<h3 class="table-information text-center">Ocjene</h3>
+	<div class="nav-tabs-wrapper">
+			<ul class="nav nav-tabs text-center justify-content-center">
+				<li class="nav-item">
+					<a class="nav-link" id="firstSemesterTab" data-toggle="tab" href="#firstSemester" >First semester</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="secondSemesterTab" data-toggle="tab" href="#secondSemester">Second semester</a>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="tab-content">
+			<div class="tab-pane" id="firstSemester">
+				<div class="">
+					<table class="">
+						<tr>
+							<th>predmet</th>
+							<th>ocjene</th>
+						</tr>
+
+						{% for key,value in grades_first.items %}
+						<tr>
+							<td>{{ key }}</td>
+							<td>
+								{% if value  %}
+								{% for grade in value %}
+								{{ grade }}
+								{% endfor %}
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+
+					</table>
+				</div>
+
+			</div>
+
+
+			<div class="tab-pane " id="secondSemester">
+				<div class="">
+					<table class="">
+						<tr>
+							<th>predmet</th>
+							<th>ocjene</th>
+						</tr>
+
+						{% for key,value in grades_second.items %}
+						<tr>
+							<td>{{ key }}</td>
+							<td>
+								{% if value  %}
+								{% for grade in value %}
+								{{ grade }}
+								{% endfor %}
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+</div>
+
+
+
+
+		<!-- ################################ MODAL ######################################## -->
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content text-center">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Unesi podatke</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="" action="" method="post">
+					<div class="modal-body">{% csrf_token %}
+						{{ change_profile_form.as_p }}
+						<input type="submit" name="" value="Submit" class="submit">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% for i in "1234567" %}
+  {% for j in "12345" %}
+	{% get_scheduled_subject current_user i j as scheduled_subject %}
+  <div class="modal fade" id="{{ i }}_{{ j }}" tabindex="-1" role="dialog" aria-labelledby="{{ i }}_{{ j }}Label" aria-hidden="true">
+  	<div class="modal-dialog modal-dialog-centered" role="document">
+  		<div class="modal-content text-center">
+  			<div class="modal-header">
+  				<h5 class="modal-title" id="{{ i }}_{{ j }}Label">Plan sata</h5>
+  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  					<span aria-hidden="true">&times;</span>
+  				</button>
+  			</div>
+        <form class="" action="{% url "appschoolscheduler:planlesson" order=i day=j scheduled_subject=scheduled_subject %}" method="post">
+          <div class="">{% csrf_token %}
+						{{ lesson_plan_form }}
+						<div class="d-block">
+							<input type="submit" name="" value="submit" class="submit">
+						</div>
+          </div>
+        </form>
+
+  		</div>
+  	</div>
+  </div>
+  {% endfor %}
+{% endfor %}
+
+
+{% for i in "1234567" %}
+  {% for j in "12345" %}
+	{% get_scheduled_subject current_user i j as subject %}
+	{% get_students_id current_user i j as students %}
+  <div class="modal fade" id="{{ i }}_{{ j }}_absences" tabindex="-1" role="dialog" aria-labelledby="{{ i }}_{{ j }}_absencesLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-dialog-centered" role="document">
+  		<div class="modal-content text-center">
+  			<div class="modal-header">
+  				<h5 class="modal-title" id="{{ i }}_{{ j }}_absencesLabel">Odsustva</h5>
+  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  					<span aria-hidden="true">&times;</span>
+  				</button>
+  			</div>
+        <form class="" action="{% url "appschoolscheduler:presenceofstudent" order=i day=j subject=subject %}" method="post">
+          <div class="">{% csrf_token %}
+						<select class="id_students" name="students">
+							{% for student in students %}
+								<option value="{{student}}">{% get_student student %}</option>
+							{%endfor%}
+						</select>
+
+						{{ presence_of_student }}
+						<div class="d-block">
+							<input type="submit" name="" value="submit" class="submit">
+						</div>
+          </div>
+        </form>
+
+  		</div>
+  	</div>
+  </div>
+  {% endfor %}
+{% endfor %}
+
+
+
+<script src="{% static 'js/js.js' %}"></script>
+{% endblock %}

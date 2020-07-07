@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load staticfiles %}
+{% load app_filters %}
+<div class="container table-container mt-5">
+	<h1 class="text-center table-information">
+		<span class="d-block h2">{{ subject }}</span> <span class="h4 fw">{{ school_class }}</span>
+	</h1>
+	<h3 id="semesterNumber" class="d-none">{{ school_class.school.semester }}</h3>
+	
+	
+	<div class="nav-tabs-wrapper">
+		<ul class="nav nav-tabs mt-5 text-center justify-content-center">
+			<li class="nav-item">
+				<a class="nav-link " id="firstSemesterTab" data-toggle="tab" href="#firstSemester">First semester</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="secondSemesterTab" data-toggle="tab" href="#secondSemester">Second semester</a>
+			</li>
+		</ul>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center mt-3">
+			<input type="search" class="search-for-table" id="search" placeholder="Search" autofocus>
+
+		</div>
+	</div>
+	<div class="tab-content">
+		<div class="tab-pane " id="firstSemester">
+			<div class="container">
+				<div class="row ">
+					<table class="text-center table-responsive-md">
+						<tr >
+							<th>First name</th>
+							<th>Lastname</th>
+							<th>Grades</th>
+							<th>Final</th>
+							<th>Add grade</th>
+						</tr>
+						{% for student in students %}
+						<tr>
+							<td>{{ student.user.first_name }}</td>
+							<td>{{ student.user.last_name }}</td>
+							<td>
+								{% for key, values in grades_dict_first.items %}
+								{% if student == key %}
+								{% for grade in values %}
+								{{ grade }}
+								{% endfor %}
+								{% endif %}
+								{% endfor %}
+							</td>
+							<td>
+								{% if  grades_dict_first_final|get_item:student %}
+								{{ grades_dict_first_final|get_item:student }}
+								{% endif %}
+							</td>
+							<td>
+								{% if school_class.school.semester == 1 %}
+								{% if not grades_dict_first_final|get_item:student %}
+								<a data-toggle="modal" data-target="#exampleModal{{ student.id }}">Add</a>
+								{% endif %}
+								{% endif %}
+							</td>
+
+						</tr>
+						{% endfor %}
+					</table>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="tab-pane" id="secondSemester">
+			<div class="container">
+				<div class="row">
+					<table class="text-center table-responsive-md">
+						<tr>
+							<th>First name</th>
+							<th>Lastname</th>
+							<th>Grades</th>
+							<th>final</th>
+							<th>Add grade</th>
+						</tr>
+						{% for student in students %}
+						<tr>
+							<td>{{ student.user.first_name }}</td>
+							<td>{{ student.user.last_name }}</td>
+							<td>
+								{% for key, values in grades_dict_second.items %}
+								{% if student == key %}
+								{% for grade in values %}
+								{{ grade }}
+								{% endfor %}
+								{% endif %}
+								{% endfor %}
+							</td>
+							<td>
+								{% if  grades_dict_second_final|get_item:student %}
+								{{ grades_dict_second_final|get_item:student }}
+								{% endif %}
+							</td>
+							<td>
+								{% if school_class.school.semester == 2 %}
+								{% if not grades_dict_second_final|get_item:student %}
+								<a data-toggle="modal" data-target="#exampleModal{{ student.id }}">Add</a>
+								{% endif %}
+								{% endif %}
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{% for student in students %}
+<div class="modal fade" id="exampleModal{{ student.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Unesi ocjenu {{ student }}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="{% url "appschoolsubjects:addGradeToStudent" subject_id=subject.id student_id=student.id %}" method="post">
+				<div class="modal-body">{% csrf_token %}
+					{{ addGradeToStudentForm.as_p }}
+					<input type="submit" name="" value="Submit" class="submit">
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+<script src="{% static 'js/js.js' %}"></script>
+{% endblock %}

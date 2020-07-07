@@ -1,0 +1,59 @@
+{% extends "base.html" %} 
+{% load staticfiles %} 
+{% block body_block %}
+
+
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-12 ">
+			<h1 class="heading text-center mb-5 borders-bottom border-bottom-black">School subjects<span class="d-block">{{ current_user.school_class }}</span></h1>
+		</div>
+	</div>
+
+
+	<div class="container table-container">
+		<div class="col-md-12 text-right">
+			<a type="" class="" data-toggle="modal" data-target="#createSubjectAssignTeacher"><i class="fas fa-plus-circle"></i> Create
+				a subject and assign a teacher </a>
+		</div>
+
+
+
+		<table class="table-responsive-sm">
+			<tr>
+				<th>Title</th>
+				<th>Teacher</th>
+			</tr>
+			{% for schoolSubject in schoolSubjects %}
+			<tr>
+				<td>{{ schoolSubject.title }}</td>
+				<td>{{ schoolSubject.teacher }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+
+
+<!-- ################################ MODAL ########################################## -->
+
+<div class="modal fade" id="createSubjectAssignTeacher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="" action="{% url "appschoolsubjects:addSchoolSubject" %}" method="post">
+				<div class="modal-body">{% csrf_token %} {{ addSchoolSubjectForm.as_p }}
+					<input type="submit" name="" value="Submit" class="submit">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

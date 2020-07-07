@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load staticfiles %}
+<h3 id="semesterNumber" class="d-none">{{ current_user.school.semester }}</h3>
+
+
+<div class="container main-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2 text-center">
+				<img src="/media/{{ student.profile_pic }}" alt="profile photo" class="profile-img">
+			</div>
+			<div class="col-md-2 my-auto text-center">
+				<p class="light-theme-color h3 d-inline-block">{{ student.user.first_name }}</p>
+				<p class="light-theme-color h3 d-inline-block">{{ student.user.last_name }}</p>
+			</div>
+			<div class="col-md-4 text-center my-auto">
+				<p class="light-theme-color h3">{{ student.school }}</p>
+				<p class="light-theme-color h4 fw">{{ student.school_class }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+			<div class="container table-container ">
+					<h1 class="text-center">Student info</h1>
+					<div class="nav-tabs-wrapper">
+						<ul class="nav nav-tabs text-center justify-content-center">
+							<li class="nav-item">
+								<a class="nav-link" id="firstSemesterTab" data-toggle="tab" href="#firstSemester" >First semester</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="secondSemesterTab" data-toggle="tab" href="#secondSemester">Second semester</a>
+							</li>
+						</ul>
+					</div>
+
+
+
+					<div class="tab-content">
+						<div class="tab-pane" id="firstSemester">
+							<div class=" table-accessory col-md-3 text-center">
+									<h3 class="fw borders-bottom">Izostanci (Prvo polugodiste)</h3>
+									<p>Opravdani: {{ absences_justified_first.count }} <a type="" class="" data-toggle="modal" data-target="#absenceJHistoryModal"><i class="fas fa-info-circle"></i></a></p>
+									<p>Neopravdani: {{ absences_unjustified_first.count }} <a type="" class="" data-toggle="modal" data-target="#absenceUHistoryModal"><i class="fas fa-info-circle"></i></a></p>
+							</div>
+							<table class="">
+								<tr>
+									<th>Subjects</th>
+									<th>Grades</th>
+									<th>Final</th>
+								</tr>
+								{% for subject in subjects %}
+								<tr>
+									<td>{{ subject }}</td>
+									<td>
+										{% for key, values in grades_dict_first.items %}
+
+										{% if subject == key %}
+										{% for grade in values %}
+										{{ grade }}
+										{% endfor %}
+										{% endif %}
+
+										{% endfor %}
+									</td>
+									<td>
+										{% load app_filters %}
+										{% if grades_dict_first_final|get_item:subject %}
+										{{ grades_dict_first_final|get_item:subject }}
+										{% endif %}
+									</td>
+
+								</tr>
+								{% endfor %}
+							</table>
+						</div>
+
+						<div class="tab-pane " id="secondSemester">
+							<div class=" table-accessory col-md-3 text-center">
+									<h3 class="fw borders-bottom">Izostanci (drugo polugodiste)</h3>
+									<p>Opravdani: {{ absences_justified_first.count }} <a type="" class="" data-toggle="modal" data-target="#absenceJHistoryModal"><i class="fas fa-info-circle"></i></a></p>
+									<p>Neopravdani: {{ absences_unjustified_first.count }} <a type="" class="" data-toggle="modal" data-target="#absenceUHistoryModal"><i class="fas fa-info-circle"></i></a></p>
+							</div>
+							<table class="">
+								<tr>
+									<th>Subjects</th>
+									<th>Grades</th>
+									<th>Final</th>
+								</tr>
+								{% for subject in subjects %}
+								<tr>
+									<td>{{ subject }}</td>
+									<td>
+										{% for key, values in grades_dict_second.items %}
+											{% if subject == key %}
+												{% for grade in values %}
+													{{ grade }}
+												{% endfor %}
+											{% endif %}
+										{% endfor %}
+									</td>
+									<td>
+										{% load app_filters %}
+										{% if grades_dict_second_final|get_item:subject %}
+											{{ grades_dict_second_final|get_item:subject }}
+										{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+							</table>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+<!-- MODAL -->
+<div class="modal fade" id="absenceJHistoryModal" tabindex="-1" role="dialog" aria-labelledby="absenceJHistoryModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="absenceJHistoryModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="content">
+				{% for absence in absences_justified %}
+					<p>{{ absence.scheduled_subject }} - {{absence.date}} - {{absence.notes}}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="absenceUHistoryModal" tabindex="-1" role="dialog" aria-labelledby="absenceUHistoryModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content text-center">
+			<div class="modal-header">
+				<h5 class="modal-title" id="absenceUHistoryModalLabel">Unesi podatke</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="content">
+				{% for absence in absences_unjustified %}
+					<p>{{ absence.scheduled_subject }} - {{absence.date}} - {{absence.notes}}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ENDMODAL -->
+
+<script src="{% static 'js/js.js' %}"></script>
+
+{% endblock %}

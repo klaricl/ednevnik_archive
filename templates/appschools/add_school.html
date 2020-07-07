@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+    {% block body_block%}
+
+    <h1>ADDING SCHOOLS</h1>
+    <form class="" action="{% url "appschools:add" %}" method="post">
+      {{ form.as_p }}
+      {%  csrf_token %}
+      <input type="submit" name="" value="Submit">
+    </form>
+
+    {% endblock %}
